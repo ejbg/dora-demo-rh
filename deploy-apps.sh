@@ -11,7 +11,7 @@ oc create sa hub-apis
 oc create token hub-apis --duration 14400m
 # a secret will be created with the token that can be used fot he API calls (hub-apis-token-XXXXX)
 oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:hub-ns:hub-apis
-# curl -k -H "Authorization: Bearer TOOKEN" "https://api.cluster-sql9s.sql9s.[Base DNS Domain]:6443/apis/policy.open-cluster-management.io/v1/namespaces/openshift-gitops/policies/hub-ns"
+# curl -k -H "Authorization: Bearer TOKEN" "https://api.cluster-sql9s.sql9s.[Base DNS Domain]:6443/apis/policy.open-cluster-management.io/v1/namespaces/openshift-gitops/policies/hub-ns"
 
 
 # create hub-apis-token secret
@@ -22,14 +22,15 @@ metadata:
   name: hub-apis-token
   namespace: hub-ns
 data:
-  token: HUB-API-SA-TOKEN Base64 encoded
+  token: ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNklucGpTMnRMU0hsUmFsTlRPVUZYTjI5SWRFWnhSMU50VjFaMlprTTJaR3RHZEROT1ltaHJObkJSVkZraWZRLmV5SmhkV1FpT2xzaWFIUjBjSE02THk5cmRXSmxjbTVsZEdWekxtUmxabUYxYkhRdWMzWmpJbDBzSW1WNGNDSTZNVGN6T0RJek16UTFOU3dpYVdGMElqb3hOek0zTXpZNU5EVTFMQ0pwYzNNaU9pSm9kSFJ3Y3pvdkwydDFZbVZ5Ym1WMFpYTXVaR1ZtWVhWc2RDNXpkbU1pTENKcWRHa2lPaUl6T0RoaE1qQXpPUzA1Wm1KakxUUTNOV010WVRNd1ppMWtNV0prTkRGa1pEazROalVpTENKcmRXSmxjbTVsZEdWekxtbHZJanA3SW01aGJXVnpjR0ZqWlNJNkltaDFZaTF1Y3lJc0luTmxjblpwWTJWaFkyTnZkVzUwSWpwN0ltNWhiV1VpT2lKb2RXSXRZWEJwY3lJc0luVnBaQ0k2SWpReE5qTmlOVGxqTFRBM1pHRXROR05sT1MxaU5tTXhMVE0zWTJZd1l6UXhOVFV4WVNKOWZTd2libUptSWpveE56TTNNelk1TkRVMUxDSnpkV0lpT2lKemVYTjBaVzA2YzJWeWRtbGpaV0ZqWTI5MWJuUTZhSFZpTFc1ek9taDFZaTFoY0dsekluMC5QbTdlREdRT0RhMEpkUm95TnRaZGJZMm0ydFdWZzkzLU9DVVVaUXVtZklRQWVkQkNWVjJONkhMWUlmaU5RXzN5XzVVdVZ3ZXdGNTNLVlMwdmphVzRXN1pHcVhXcDRicHZqM1VXMkdsVVEwWlFWa2lBeENFVEFvdGprNnRHS09sall5N0Y0VGMwOWJtQ1NPcW9PUVN6U2phYkFvcG9yWmVCUEJ6NEtCNkYwRXJUaW01RHNRcWxLenVITGMwOHlTMVpTNWJMRHh4NTJwbVctSmczMTZPdW9BbndQMjRoa0wzS2Y3RWpHZzd6b0VRSjJrenUzaDQ4Skk5U1I4YVFOTzJOaTlndGx2ZU9CaW13bTZ3amxZUVI3MjYtMjB3cjFTU3g3YVZWcFJGWFB0X3UzWkwyVnJWcC1jdks4OEpzYXdOWTJKZDZlVFBBa2FsOEVFRm1WTkVLd1JROWdaakd2Y0VsT1pISGFZUkI3LUJQT1lYWnljQzRTVEN4THltM2I4ZkZUbnN3MlQxc2ZhblU4Z29KR2dIVW1jeWE1SkVFNUZTT2xBOTVud0p4bTd5ay1DclV0YW9aN3czWnNPbjdUc1VHT282cFZrelYwNVZSd3VGQjJIZzYxc1d5NUc3MW9KTVdQWDZUNkt1VUh3UlhWRDdlQUFnQXBSZ1N2V1dYWE5JbzdMZm42TzVGVWFtMmRTM2lLNDV6eHY1bVYwLWpJckdxdGZiVXRHeGJFdFlLOGZvWnpqUDlFZDRHeUFRT250cENtUlJheU52Rksxamp2SGtvc1VETjdhbnR4d1hLU1pOaXAtVkxjV0xjN01RVjU0b29hcnhvMWN2RjhUSGhKMUZHOWUzcmRjSzFGdENXV3MzUEJFY050cGJ1VFU2ZWYwTGpKVkM2VE5ra2xLVQ==
 type: Opaque
 EOF
 
-# once secret is created, the ndeploy the dashboard app
+# once secret is created, then deploy the dashboard app
 # deploy dashboard app
 oc create -f gitops/dashboard-applicationset.yaml -n openshift-gitops
 
 
 # delete 
 #oc delete  -f dashboard-applicationset.yaml -n openshift-gitops
+

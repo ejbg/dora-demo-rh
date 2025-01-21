@@ -2,6 +2,13 @@
 export JAVA_HOME=/usr/local/opt/openjdk@17
 export TESTCONTAINERS_RYUK_DISABLED=true
 
+# install operators
+# Start: We usually use web console for this 
+# Gitops
+# pipelines
+# Azure services operator
+# Service interconnect
+
 # argocd 
 oc new-project hub-ns
 oc adm groups new cluster-admins
@@ -13,6 +20,7 @@ oc label ns hub-ns argocd.argoproj.io/managed-by=openshift-gitops --overwrite
 # oc label ns azure-native argocd.argoproj.io/managed-by=openshift-gitops --overwrite
 
 #pipeline
+
 oc policy add-role-to-user admin system:serviceaccount:hub-ns:pipeline -n openshift-gitops
 
 # lift pipeline permission up 
@@ -46,12 +54,7 @@ oc adm policy \
     add-cluster-role-to-user self-provisioner \
     system:serviceaccount:hub-ns:pipeline
 
-# install operators
-# Start: We usually use web console for this 
-# Gitops
-# pipelines
-# Azure services operator
-# Service interconnect
+
 
 
 oc create ns openshift-gitops-operator
@@ -102,6 +105,10 @@ oc create -f gitops/pipelines/application-pipeline.yaml \
           -f gitops/pipelines/application-pipeline-template.yaml \
           -f gitops/pipelines/application-pipeline-triggerbinding.yaml \
           -f gitops/pipelines/application-pipeline-eventlistener.yaml 
+
+
+
+
 
 oc create -f gitops/pipelines/azure-native-pipeline.yaml
 
