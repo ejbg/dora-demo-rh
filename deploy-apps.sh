@@ -32,5 +32,5 @@ oc create -f gitops/dashboard-applicationset.yaml -n openshift-gitops
 
 
 # delete 
-#oc delete  -f dashboard-applicationset.yaml -n openshift-gitops
+#oc delete  -f gitops/dashboard-applicationset.yaml -n openshift-gitops
 
