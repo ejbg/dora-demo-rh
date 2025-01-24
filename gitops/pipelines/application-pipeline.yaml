@@ -2,6 +2,7 @@ apiVersion: tekton.dev/v1
 kind: Pipeline
 metadata:
   name: application-pipeline
+  namespace: hub-ns
 spec:
   params:
     - default: deploy
@@ -54,9 +55,17 @@ spec:
           value: 'registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8@sha256:868966ef9d4b54952d8a74eb83bba40eb1f52c0148994fa704efd0e3797c61c5'
         - name: userHome
           value: /home/git
+        - name: URL
+          value: 'https://github.com/gestrem/dora-demo-rh'
       taskRef:
-        kind: ClusterTask
-        name: git-clone
+        params:
+          - name: kind
+            value: task
+          - name: name
+            value: git-clone
+          - name: namespace
+            value: openshift-pipelines
+        resolver: cluster
       workspaces:
         - name: output
           workspace: source
@@ -77,7 +86,7 @@ spec:
           values:
             - deploy
       workspaces:
-        - name: manifest-dir
+        - name: manifest_dir
           workspace: source
     - name: remove-app
       params:
@@ -96,7 +105,7 @@ spec:
           values:
             - remove
       workspaces:
-        - name: manifest-dir
+        - name: manifest_dir
           workspace: source
     - name: deploy-callback
       params:

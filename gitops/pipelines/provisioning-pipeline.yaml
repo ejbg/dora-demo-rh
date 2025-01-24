@@ -18,14 +18,18 @@ spec:
     - default: ns
       name: type
       type: string
-    - default: 'http://dashboard-hub-ns.apps.cluster-qrxpz.qrxpz.sandbox2464.opentlc.com/department/provision/commit'
+    - default: >-
+        http://dashboard-hub-ns.apps.cluster-qrxpz.qrxpz.sandbox2464.opentlc.com/department/provision/commit
       name: callback_url
       type: string
   tasks:
     - name: ns-config
       params:
         - name: SCRIPT
-          value: sed -e 's/DEPARTMENT/$(params.department)/g' -e 's/LOCATION/$(params.location)/g' gitops/provisioning/ns.yaml | oc $(params.action) -f - -n openshift-gitops
+          value: >-
+            sed -e 's/DEPARTMENT/$(params.department)/g' -e
+            's/LOCATION/$(params.location)/g' gitops/provisioning/ns.yaml | oc
+            $(params.action) -f - -n openshift-gitops
         - name: VERSION
           value: latest
       runAfter:
@@ -45,7 +49,7 @@ spec:
           values:
             - ns
       workspaces:
-        - name: manifest-dir
+        - name: manifest_dir
           workspace: source
     - name: cluster-ns
       params:
@@ -70,7 +74,7 @@ spec:
           values:
             - cluster
       workspaces:
-        - name: kubeconfig-dir
+        - name: manifest_dir
           workspace: source
     - name: callback
       params:
@@ -94,7 +98,11 @@ spec:
     - name: secrets
       params:
         - name: SCRIPT
-          value: 'oc get secret cluster-secrets -n hub-ns -o jsonpath=''{.data.secrets}'' | base64 --decode | sed -e ''s/NAMESPACE/$(params.department)/g'' | oc create -f - -n $(params.department)-cluster'
+          value: >-
+            oc get secret cluster-secrets -n hub-ns -o
+            jsonpath='{.data.secrets}' | base64 --decode | sed -e
+            's/NAMESPACE/$(params.department)/g' | oc create -f - -n
+            $(params.department)-cluster
         - name: VERSION
           value: latest
       runAfter:
@@ -113,10 +121,17 @@ spec:
           operator: in
           values:
             - cluster
+      workspaces:
+        - name: manifest_dir
+          workspace: source
     - name: cluster
       params:
         - name: SCRIPT
-          value: 'oc get secret cluster-secrets -n hub-ns -o jsonpath=''{.data.cluster}'' | base64 --decode | sed -e ''s/NAMESPACE/$(params.department)/g'' | oc create -f - -n $(params.department)-cluster'
+          value: >-
+            oc get secret cluster-secrets -n hub-ns -o
+            jsonpath='{.data.cluster}' | base64 --decode | sed -e
+            's/NAMESPACE/$(params.department)/g' | oc create -f - -n
+            $(params.department)-cluster
         - name: VERSION
           value: latest
       runAfter:
@@ -135,10 +150,16 @@ spec:
           operator: in
           values:
             - cluster
+      workspaces:
+        - name: manifest_dir
+          workspace: source
     - name: cluster-set
       params:
         - name: SCRIPT
-          value: 'oc get secret cluster-secrets -n hub-ns -o jsonpath=''{.data.cluster-set}'' | base64 --decode | sed -e ''s/NAMESPACE/$(params.department)/g'' | oc create -f - '
+          value: >-
+            oc get secret cluster-secrets -n hub-ns -o
+            jsonpath='{.data.cluster-set}' | base64 --decode | sed -e
+            's/NAMESPACE/$(params.department)/g' | oc create -f - 
         - name: VERSION
           value: latest
       runAfter:
@@ -157,10 +178,16 @@ spec:
           operator: in
           values:
             - cluster
+      workspaces:
+        - name: manifest_dir
+          workspace: source
     - name: db-config
       params:
         - name: SCRIPT
-          value: sed -e 's/DEPARTMENT/$(params.department)/g' -e 's/LOCATION/$(params.location)/g' gitops/db/applicationset-db.yaml | oc $(params.action) -f - -n openshift-gitops
+          value: >-
+            sed -e 's/DEPARTMENT/$(params.department)/g' -e
+            's/LOCATION/$(params.location)/g' gitops/db/applicationset-db.yaml |
+            oc $(params.action) -f - -n openshift-gitops
         - name: VERSION
           value: latest
       runAfter:
@@ -180,12 +207,16 @@ spec:
           values:
             - ns
       workspaces:
-        - name: manifest-dir
+        - name: manifest_dir
           workspace: source
     - name: app-placement
       params:
         - name: SCRIPT
-          value: 'kubectl patch placement $(params.department)-placement --type "json" -p ''[{"op":"add","path":"/spec/predicates/0/requiredClusterSelector/labelSelector/matchExpressions/0/values/1","value":"$(params.location)"}]'' -n openshift-gitops'
+          value: >-
+            kubectl patch placement $(params.department)-placement --type "json"
+            -p
+            '[{"op":"add","path":"/spec/predicates/0/requiredClusterSelector/labelSelector/matchExpressions/0/values/1","value":"$(params.location)"}]'
+            -n openshift-gitops
         - name: VERSION
           value: latest
       runAfter:
@@ -205,7 +236,7 @@ spec:
           values:
             - ns
       workspaces:
-        - name: manifest-dir
+        - name: manifest_dir
           workspace: source
     - name: git-clone-0tm
       params:
@@ -228,7 +259,7 @@ spec:
         - name: SSL_VERIFY
           value: 'true'
         - name: URL
-          value: 'https://github.com/gestrem/dora-demo-rh'
+          value: https://github.com/gestrem/dora-demo-rh
         - name: REVISION
           value: main
         - name: REFSPEC
@@ -253,3 +284,4 @@ spec:
           workspace: source
   workspaces:
     - name: source
+  finally: []
