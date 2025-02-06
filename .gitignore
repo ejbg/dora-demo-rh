@@ -1,4 +1,6 @@
 gitops/provisioning/cluster/install-config.yaml
+gitops/provisioning/cluster/install-config-base64.txt
+gitops/provisioning/cluster/install-config-base64.txt.ori
 gitops/pipelines/tasks/cluster-secrets.yaml
 gitops/provisioning/cluster/cluster-secrets-list.yaml
 gitops/provisioning/ns copy.yaml
@@ -7,3 +9,5 @@ gitops/scripts/azure_native_to_dc.token
 gitops/scripts/azure_to_dc.token
 gitops/provisioning/cluster/cluster-secrets.yaml
 cluster-secrets.yml
+cluster-rhdemo.yaml
+rh-pull-secrets.txt
