@@ -24,7 +24,7 @@ spec:
       project: default
       sources:
         - path: gitops/dashboard
-          repoURL: https://github.com/gestrem/dora-demo-rh
+          repoURL: https://github.com/ejbg/dora-demo-rh.git
           targetRevision: main
           repositoryType: git
       syncPolicy:
