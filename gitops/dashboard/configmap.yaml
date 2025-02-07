@@ -11,4 +11,4 @@ data:
   build.pipeline.el: http://dummy
   department.url: dashboard-hub-ns.apps.cluster-5h2hr.5h2hr.sandbox632.opentlc.com
   #ocp.token: NA
-  policy.url: https://api.cluster-qrxpz.qrxpz.sandbox632.opentlc.com:6443/apis/policy.open-cluster-management.io/v1/namespaces/openshift-gitops/policies
+  policy.url: https://api.cluster-5h2hr.5h2hr.sandbox632.opentlc.com:6443/apis/policy.open-cluster-management.io/v1/namespaces/openshift-gitops/policies
