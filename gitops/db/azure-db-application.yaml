@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     path: gitops/db/azure-native
-    repoURL: https://github.com/gestrem/dora-demo-rh
+    repoURL: https://github.com/ejbg/dora-demo-rh
     targetRevision: main
   syncPolicy:
     syncOptions:

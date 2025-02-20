@@ -21,7 +21,7 @@ spec:
       project: default
       sources:
         - repositoryType: git
-          repoURL: https://github.com/gestrem/dora-demo-rh.git
+          repoURL: https://github.com/ejbg/dora-demo-rh.git
           targetRevision: main
           path: gitops/db/service-layer
       destination:
